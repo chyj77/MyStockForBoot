@@ -17,7 +17,7 @@ public class VisitService {
             String counts = redisUtil.get(key);
             Integer count = Integer.valueOf(counts);
             count = count + 1;
-            redisUtil.set(key,count);
+            redisUtil.set(key,count.toString());
         }else {
             redisUtil.set(key,"1");
         }
