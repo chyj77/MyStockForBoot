@@ -19,7 +19,7 @@ public class VisitService {
             count = count + 1;
             redisUtil.set(key,count);
         }else {
-            redisUtil.set(key,1);
+            redisUtil.set(key,"1");
         }
     }
 }
