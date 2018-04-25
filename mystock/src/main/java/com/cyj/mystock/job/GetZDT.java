@@ -40,7 +40,9 @@ public class GetZDT {
     private boolean flag;
 
     public boolean start() throws Exception {
-        timer.schedule(timerTaskInstance(), 0L, SECOND);
+        if (timerTask == null) {
+            timer.schedule(timerTaskInstance(), 0L, SECOND);
+        }
         return flag;
     }
 
