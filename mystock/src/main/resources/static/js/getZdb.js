@@ -3,7 +3,7 @@ function getZdb(tabid) {
     var rootDiv = $('<div>', {'id': 'zdbStock' + tabid, 'class': 'l-tab-content-item'});
     var lhbDiv = $('<div>');
     var clearDiv = $('<div>', {'class': 'l-clear'});
-    var zdbhDiv = $('<div>', {'style': 'padding-top:10px;overflow-y:scroll;padding-left:30px;float:left;width:98%;height:756px'});
+    var zdbhDiv = $('<div>', {'style': 'padding-top:10px;overflow-y:scroll;padding-left:30px;float:left;width:98%;height:800px'});
     zdbDiv = $('<div>', {'style': 'padding-top:10px'});
     var maingridZfDiv = $('<div>', {
         'id': 'maingridZfbStock',

@@ -49,7 +49,9 @@ public class GetStock {
     private final long SECOND = 5 * 1000L;
 
     public boolean start() throws Exception {
-        timer.schedule(timerTaskInstance(), 0L, SECOND);
+        if (timerTask == null) {
+            timer.schedule(timerTaskInstance(), 0L, SECOND);
+        }
         return flag;
     }
 

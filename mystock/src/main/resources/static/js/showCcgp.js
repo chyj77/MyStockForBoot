@@ -162,7 +162,7 @@ function showCcgp(tabid) {
                             name: 'id', width: 10, hide: true
                         }
                     ], data: resultData, pageSize: 25, rownumbers: true, enabledEdit: true,
-                    usePager: false, isScroll: true,
+                    usePager: false, isScroll: true,rowHeight:40,
                     toolbar: {
                         items: [
                             {text: '增加', click: addCcgpRow, icon: 'add'},
