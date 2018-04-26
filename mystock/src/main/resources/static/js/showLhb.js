@@ -11,13 +11,12 @@ function showLhb(tabid) {
     var date = new Date();
     date.setDate(date.getDate()-1);
     // console.log(date);
-    rqText.ligerDateEditor({initValue: date.format('yyyy-MM-dd') });
-    rqText.blur(function ()
-    {
-        console.log('日期:',rqText.val());
-        lhbDiv.empty();
-        executeShow(rqText.val(),tabid,lhbDiv);
-    });
+    rqText.ligerDateEditor({initValue: date.format('yyyy-MM-dd') ,onChangeDate:function ()
+        {
+            console.log('日期:',rqText.val());
+            lhbDiv.empty();
+            executeShow(rqText.val(),tabid,lhbDiv);
+        }});
     // console.log(rqText);
     // console.log(rqText.val());
     rootDiv.append(lhbDiv);
