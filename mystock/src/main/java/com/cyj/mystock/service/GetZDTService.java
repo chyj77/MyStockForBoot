@@ -55,7 +55,7 @@ public class GetZDTService {
             lastZdt.put("z8to10",zdfbJson.get(9));
             lastZdt.put("znum",zdfbData.get("znum"));
             lastZdt.put("dnum",zdfbData.get("dnum"));
-            log.info(lastZdt);
+//            log.info(lastZdt);
             String queueName = "zdt";
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(Const.KEY,Const.ZDT);

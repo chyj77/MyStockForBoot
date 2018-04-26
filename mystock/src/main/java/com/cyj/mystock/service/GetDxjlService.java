@@ -38,7 +38,7 @@ public class GetDxjlService {
 
     public void run() {
 
-        log.info("获取短线精灵的时间：{}", new Date());
+//        log.info("获取短线精灵的时间：{}", new Date());
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             HttpGet request = new HttpGet(DXJLURL);
