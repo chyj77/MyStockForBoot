@@ -26,7 +26,7 @@ public class DfbService {
             "page=1&num=200&sort=changepercent&asc=1&node=hs_a&symbol=&_s_r_a=init";
 
     public void run(){
-        log.info("获取跌幅榜的时间：{}",new Date());
+//        log.info("获取跌幅榜的时间：{}",new Date());
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             HttpGet request = new HttpGet(URL);

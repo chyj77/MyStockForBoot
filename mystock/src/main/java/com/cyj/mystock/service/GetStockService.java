@@ -31,7 +31,7 @@ public class GetStockService {
     private final String URL="http://hq.sinajs.cn/list=";
 
     public void run(boolean flag){
-        log.info("获取关注股票数据的时间：{}",new Date());
+//        log.info("获取关注股票数据的时间：{}",new Date());
         String providerMsg = followStockService.getAll();
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
