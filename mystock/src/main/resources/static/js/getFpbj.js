@@ -10,6 +10,7 @@ function getFpbj(tabid) {
     rqText.parent().style='float:left';
     rqText.parent().prepend(p);
     var date = new Date();
+    date.setDate(date.getDate()-1);
     // console.log(date);
     rqText.ligerDateEditor({initValue: date.format('yyyy-MM-dd'),onChangeDate: function ()
         {
