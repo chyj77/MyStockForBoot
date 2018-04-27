@@ -149,4 +149,10 @@ public class SpmmInfoService {
     public void insertZdtBean(ZdtBean bean){
         spmmMapper.insertZdtBean(bean);
     }
+
+    public String getDayzdt(){
+        ZdtBean bean = spmmMapper.getDayzdt();
+        JSONObject jsonObject = MyStringUtils.beanToJSON(bean);
+        return jsonObject.toJSONString();
+    }
 }

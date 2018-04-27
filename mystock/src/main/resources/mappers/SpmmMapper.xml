@@ -133,6 +133,12 @@
         #{dnum}
         )
     </insert>
+    <select id="getDayzdt" resultType="com.cyj.mystock.bean.ZdtBean">
+        SELECT *
+        FROM dayzdt
+        ORDER BY trade_date DESC
+        limit 1
+    </select>
     <!--
     <insert id="insertSelective" parameterType="com.lgp.SpringBoot.bean.AppMessage" >
         insert into appuser_message

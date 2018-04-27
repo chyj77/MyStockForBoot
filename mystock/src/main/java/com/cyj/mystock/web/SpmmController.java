@@ -2,7 +2,9 @@ package com.cyj.mystock.web;
 
 import com.cyj.mystock.bean.SpmmBean;
 import com.cyj.mystock.bean.ZtsjBean;
+import com.cyj.mystock.service.DfbService;
 import com.cyj.mystock.service.SpmmInfoService;
+import com.cyj.mystock.service.ZfbService;
 import com.cyj.mystock.service.ZtsjInfoService;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -22,6 +24,10 @@ public class SpmmController {
 
     @Autowired
     private SpmmInfoService service;
+    @Autowired
+    private DfbService dfbService;
+    @Autowired
+    private ZfbService zfbService;
 
     @RequestMapping("/spmm/luoji")
     public String luoji() {
@@ -30,6 +36,11 @@ public class SpmmController {
     @RequestMapping("/spmm/stocks")
     public String stocks() {
         return  service.getStock();
+    }
+    @RequestMapping("/spmm/getStock")
+    public String getStock(HttpServletRequest request) {
+        String stockcode = request.getParameter("stockcode");
+        return  service.getStock(stockcode);
     }
     @RequestMapping("/spmm/index")
     public String spmm() {
@@ -66,6 +77,16 @@ public class SpmmController {
     @RequestMapping("/spmm/fx")
     public String querySpmmFx() throws Exception {
         return  service.querySpmmFx();
+    }
+
+    @RequestMapping("/spmm/zdt")
+    public String queryZdt() throws Exception {
+        return  service.getDayzdt();
+    }
+    @RequestMapping("/spmm/zdfb")
+    public void queryZdfb() throws Exception {
+        zfbService.run();
+        dfbService.run();
     }
 
 }

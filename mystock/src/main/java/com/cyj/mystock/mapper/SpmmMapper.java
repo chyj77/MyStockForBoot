@@ -25,4 +25,6 @@ public interface SpmmMapper {
     List<Map> querySpmmFx();
 
     void insertZdtBean(ZdtBean bean);
+
+    ZdtBean getDayzdt();
 }
