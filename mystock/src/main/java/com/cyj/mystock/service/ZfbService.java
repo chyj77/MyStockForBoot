@@ -25,9 +25,10 @@ public class ZfbService {
     private final String URL="http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData?" +
             "page=1&num=100&sort=changepercent&asc=0&node=hs_a&symbol=&_s_r_a=init";
 
-    public void run(){
-//        log.info("获取涨幅榜的时间：{}",new Date());
+    public String getZfb(){
+        //        log.info("获取涨幅榜的时间：{}",new Date());
         CloseableHttpClient httpclient = HttpClients.createDefault();
+        String result ="";
         try {
             HttpGet request = new HttpGet(URL);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(15000)
@@ -36,14 +37,18 @@ public class ZfbService {
             CloseableHttpResponse response = httpclient.execute(request);
             String content = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = JSONArray.fromObject(content);
-            String queueName = "zfb";
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(Const.KEY,Const.ZFB);
             jsonObject.put("data",jsonArray);
-            queueSender.send(queueName,jsonObject.toString());
+            result = jsonObject.toString();
         }catch (Exception e){
             e.printStackTrace();
             log.error("获取涨幅榜异常：",e);
         }
+        return result;
+    }
+    public void run(){
+        String queueName = "zfb";
+        queueSender.send(queueName,getZfb());
     }
 }

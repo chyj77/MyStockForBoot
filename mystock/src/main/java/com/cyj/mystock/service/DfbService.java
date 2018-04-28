@@ -25,9 +25,10 @@ public class DfbService {
     private final String URL="http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData?" +
             "page=1&num=100&sort=changepercent&asc=1&node=hs_a&symbol=&_s_r_a=init";
 
-    public void run(){
-//        log.info("获取跌幅榜的时间：{}",new Date());
+    public String getDfb(){
+        //        log.info("获取跌幅榜的时间：{}",new Date());
         CloseableHttpClient httpclient = HttpClients.createDefault();
+        String result="";
         try {
             HttpGet request = new HttpGet(URL);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(15000)
@@ -36,14 +37,18 @@ public class DfbService {
             CloseableHttpResponse response = httpclient.execute(request);
             String content = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = JSONArray.fromObject(content);
-            String queueName = "dfb";
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(Const.KEY,Const.DFB);
             jsonObject.put("data",jsonArray);
-            queueSender.send(queueName,jsonObject.toString());
+            result = jsonObject.toString();
         }catch (Exception e){
             e.printStackTrace();
             log.error("获取跌幅榜异常：",e);
         }
+        return result;
+    }
+    public void run(){
+        String queueName = "dfb";
+        queueSender.send(queueName,getDfb());
     }
 }

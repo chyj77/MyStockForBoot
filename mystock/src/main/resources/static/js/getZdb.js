@@ -36,139 +36,145 @@ function getZdb(tabid) {
     $.ajax({
         type: 'GET',
         contentType: 'application/json',
-        url: '/spmm/zdfb'
-    });
-    var zfbData = {
-        'code': '',
-        'name': '',
-        'settlement': '',
-        'open': '',
-        'trade': '',
-        'changepercent': '',
-        'turnoverratio': ''
-    };
-    var dfbData = {
-        'code': '',
-        'name': '',
-        'settlement': '',
-        'open': '',
-        'trade': '',
-        'changepercent': '',
-        'turnoverratio': ''
-    };
-
-    var zfbDatas = {"Rows": zfbData, "Total": 100};
-    var dfbDatas = {"Rows": dfbData, "Total": 100};
-    maingridZfDiv.ligerGrid({
-        columns: [
-            {display: '股票代码', name: 'code', align: 'left', width: 60, minWidth: 50},
-            {display: '股票名称', name: 'name', minWidth: 60},
-            {display: '昨收', name: 'settlement', minWidth: 50},
-            {
-                display: '开盘', name: 'open', minWidth: 50, render: function (item, index, val, obj) {//item 行数据 index 行号 val 列值 obj grid对象
-                    var open = parseFloat(item.open);
-                    var settlement = parseFloat(item.settlement);
-                    if (open > settlement)
-                        return '<span style="color:red">' + item.open + '</span>';
-                    else
-                        return '<span style="color:green">' + item.open + '</span>';
-                }
-            },
-            {
-                display: '最新', name: 'trade', minWidth: 50, render: function (item) {
-                    var trade = parseFloat(item.trade);
-                    var settlement = parseFloat(item.settlement);
-                    if (trade > settlement)
-                        return '<span style="color:red">' + item.trade + '</span>';
-                    else
-                        return '<span style="color:green">' + item.trade + '</span>';
-                }
-            },
-            {
-                display: '涨幅', name: 'changepercent', minWidth: 50, render: function (item) {
-                    return '<span style="color:red">' + item.changepercent + '%</span>';
-                }
-            },
-            {
-                display: '换手率', name: 'turnoverratio', minWidth: 50, render: function (item) {
-                    return '<span style="color:red">' + item.turnoverratio + '%</span>';
-                }
-            }
-        ], data: zfbDatas, pageSize: 100, rownumbers: true, width: 770, onSelectRow: function (item, rid, trRow) {
-            // console.log(item);
-            // console.log(rid);
-            // console.log(trRow);
-            $.ajax({
-                type: 'GET',
-                contentType: 'application/json',
-                url: '/spmm/getStock?stockcode=' + item.code,
-                success: function (data) {
-                    if (data != undefined && data != '') {
-                        var resultData3 = JSON.parse(data);
-                        // console.log($(trRow).children(":first"));
-                        $(trRow).ligerTip({content: resultData3.tag});
-                        setTimeout(function () {
-                            $(trRow).ligerHideTip();
-                        }, 5000);
+        url: '/spmm/zfb',
+        success: function (data) {
+            var zfbDataJson = JSON.parse(data);
+            var zfbData = zfbDataJson.data;
+            var zfbDatas = {"Rows": zfbData, "Total": 100};
+            maingridZfDiv.ligerGrid({
+                columns: [
+                    {display: '股票代码', name: 'code', align: 'left', width: 60, minWidth: 50},
+                    {display: '股票名称', name: 'name', minWidth: 60},
+                    {display: '昨收', name: 'settlement', minWidth: 50},
+                    {
+                        display: '开盘', name: 'open', minWidth: 50, render: function (item, index, val, obj) {//item 行数据 index 行号 val 列值 obj grid对象
+                            var open = parseFloat(item.open);
+                            var settlement = parseFloat(item.settlement);
+                            if (open > settlement)
+                                return '<span style="color:red">' + item.open + '</span>';
+                            else
+                                return '<span style="color:green">' + item.open + '</span>';
+                        }
+                    },
+                    {
+                        display: '最新', name: 'trade', minWidth: 50, render: function (item) {
+                            var trade = parseFloat(item.trade);
+                            var settlement = parseFloat(item.settlement);
+                            if (trade > settlement)
+                                return '<span style="color:red">' + item.trade + '</span>';
+                            else
+                                return '<span style="color:green">' + item.trade + '</span>';
+                        }
+                    },
+                    {
+                        display: '涨幅', name: 'changepercent', minWidth: 50, render: function (item) {
+                            return '<span style="color:red">' + item.changepercent + '%</span>';
+                        }
+                    },
+                    {
+                        display: '换手率', name: 'turnoverratio', minWidth: 50, render: function (item) {
+                            return '<span style="color:red">' + item.turnoverratio + '%</span>';
+                        }
                     }
+                ],
+                data: zfbDatas,
+                pageSize: 100,
+                rownumbers: true,
+                width: 770,
+                onSelectRow: function (item, rid, trRow) {
+                    // console.log(item);
+                    // console.log(rid);
+                    // console.log(trRow);
+                    $.ajax({
+                        type: 'GET',
+                        contentType: 'application/json',
+                        url: '/spmm/getStock?stockcode=' + item.code,
+                        success: function (data) {
+                            if (data != undefined && data != '') {
+                                var resultData3 = JSON.parse(data);
+                                // console.log($(trRow).children(":first"));
+                                $(trRow).ligerTip({content: resultData3.tag});
+                                setTimeout(function () {
+                                    $(trRow).ligerHideTip();
+                                }, 5000);
+                            }
+                        }
+                    });
                 }
             });
         }
     });
-    maingridDfDiv.ligerGrid({
-        columns: [
-            {display: '股票代码', name: 'code', align: 'left', width: 60, minWidth: 50},
-            {display: '股票名称', name: 'name', minWidth: 60},
-            {display: '昨收', name: 'settlement', minWidth: 50},
-            {
-                display: '开盘', name: 'open', minWidth: 50, render: function (item) {
-                    var open = parseFloat(item.open);
-                    var settlement = parseFloat(item.settlement);
-                    if (open > settlement)
-                        return '<span style="color:red">' + item.open + '</span>';
-                    else
-                        return '<span style="color:green">' + item.open + '</span>';
-                }
-            },
-            {
-                display: '最新', name: 'trade', minWidth: 50, render: function (item) {
-                    var trade = parseFloat(item.trade);
-                    var settlement = parseFloat(item.settlement);
-                    if (trade > settlement)
-                        return '<span style="color:red">' + item.trade + '</span>';
-                    else
-                        return '<span style="color:green">' + item.trade + '</span>';
-                }
-            },
-            {
-                display: '跌幅', name: 'changepercent', minWidth: 50, render: function (item) {
-                    return '<span style="color:darkgreen">' + item.changepercent + '%</span>';
-                }
-            },
-            {
-                display: '换手率', name: 'turnoverratio', minWidth: 50, render: function (item) {
-                    return '<span style="color:darkgreen">' + item.turnoverratio + '%</span>';
-                }
-            }
-        ], data: dfbDatas, pageSize: 100, rownumbers: true, width: 770, onSelectRow: function (item, rid, trRow) {
-            // console.log(item);
-            // console.log(rid);
-            // console.log(trRow);
-            $.ajax({
-                type: 'GET',
-                contentType: 'application/json',
-                url: '/spmm/getStock?stockcode=' + item.code,
-                success: function (data) {
-                    if (data != undefined && data != '') {
-                        var resultData3 = JSON.parse(data);
-                        // console.log($(trRow).children(":first"));
-                        $(trRow).ligerTip({content: resultData3.tag});
-                        setTimeout(function () {
-                            $(trRow).ligerHideTip();
-                        }, 5000);
+    $.ajax({
+        type: 'GET',
+        contentType: 'application/json',
+        url: '/spmm/dfb',
+        success: function (data) {
+            var dfbDataJson = JSON.parse(data);
+            var dfbData = dfbDataJson.data;
+            var dfbDatas = {"Rows": dfbData, "Total": 100};
+
+            maingridDfDiv.ligerGrid({
+                columns: [
+                    {display: '股票代码', name: 'code', align: 'left', width: 60, minWidth: 50},
+                    {display: '股票名称', name: 'name', minWidth: 60},
+                    {display: '昨收', name: 'settlement', minWidth: 50},
+                    {
+                        display: '开盘', name: 'open', minWidth: 50, render: function (item) {
+                            var open = parseFloat(item.open);
+                            var settlement = parseFloat(item.settlement);
+                            if (open > settlement)
+                                return '<span style="color:red">' + item.open + '</span>';
+                            else
+                                return '<span style="color:green">' + item.open + '</span>';
+                        }
+                    },
+                    {
+                        display: '最新', name: 'trade', minWidth: 50, render: function (item) {
+                            var trade = parseFloat(item.trade);
+                            var settlement = parseFloat(item.settlement);
+                            if (trade > settlement)
+                                return '<span style="color:red">' + item.trade + '</span>';
+                            else
+                                return '<span style="color:green">' + item.trade + '</span>';
+                        }
+                    },
+                    {
+                        display: '跌幅', name: 'changepercent', minWidth: 50, render: function (item) {
+                            return '<span style="color:darkgreen">' + item.changepercent + '%</span>';
+                        }
+                    },
+                    {
+                        display: '换手率', name: 'turnoverratio', minWidth: 50, render: function (item) {
+                            return '<span style="color:darkgreen">' + item.turnoverratio + '%</span>';
+                        }
                     }
+                ],
+                data: dfbDatas,
+                pageSize: 100,
+                rownumbers: true,
+                width: 770,
+                onSelectRow: function (item, rid, trRow) {
+                    // console.log(item);
+                    // console.log(rid);
+                    // console.log(trRow);
+                    $.ajax({
+                        type: 'GET',
+                        contentType: 'application/json',
+                        url: '/spmm/getStock?stockcode=' + item.code,
+                        success: function (data) {
+                            if (data != undefined && data != '') {
+                                var resultData3 = JSON.parse(data);
+                                // console.log($(trRow).children(":first"));
+                                $(trRow).ligerTip({content: resultData3.tag});
+                                setTimeout(function () {
+                                    $(trRow).ligerHideTip();
+                                }, 5000);
+                            }
+                        }
+                    });
                 }
             });
+
         }
     });
 }

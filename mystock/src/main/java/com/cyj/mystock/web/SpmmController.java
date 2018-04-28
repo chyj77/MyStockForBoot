@@ -83,10 +83,13 @@ public class SpmmController {
     public String queryZdt() throws Exception {
         return  service.getDayzdt();
     }
-    @RequestMapping("/spmm/zdfb")
-    public void queryZdfb() throws Exception {
-        zfbService.run();
-        dfbService.run();
+    @RequestMapping("/spmm/zfb")
+    public String queryZfb() throws Exception {
+        return zfbService.getZfb();
+    }
+    @RequestMapping("/spmm/dfb")
+    public String queryDfb() throws Exception {
+        return dfbService.getDfb();
     }
 
 }
