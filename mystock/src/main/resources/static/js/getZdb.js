@@ -47,7 +47,7 @@ function getZdb(tabid) {
                     {display: '股票名称', name: 'name', minWidth: 60},
                     {display: '昨收', name: 'settlement', minWidth: 50},
                     {
-                        display: '开盘', name: 'open', minWidth: 50, render: function (item, index, val, obj) {//item 行数据 index 行号 val 列值 obj grid对象
+                        display: '开盘', name: 'open', minWidth: 50, render: function (item, index, val, obj) {//item 行数据 index 行号 val 列值 cell对象
                             var open = parseFloat(item.open);
                             var settlement = parseFloat(item.settlement);
                             if (open > settlement)

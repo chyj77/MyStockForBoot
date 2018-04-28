@@ -56,6 +56,29 @@ public class ZtfpService {
         return jsonArray;
     }
 
+    public JSONArray findJrj(String day){
+        Date date1 = new Date();
+        MongoCollection<Document> collection = mongoTemplate.getCollection("jrj");
+        FindIterable<Document> findIterable = collection.find(new Bson() {
+            @Override
+            public <TDocument> BsonDocument toBsonDocument(Class<TDocument> aClass, CodecRegistry codecRegistry) {
+
+                return BsonDocument.parse("{rq:'"+day+"'}");
+            }
+        });
+        MongoCursor cursor =  findIterable.iterator();
+        JSONArray jsonArray = new JSONArray();
+        while (cursor.hasNext()){
+            Document document = (Document)cursor.next();
+            document.remove("_id");
+//            String json = document.toJson();
+            jsonArray.add(document);
+        }
+        log.info("获取MONGODB金融界耗时={}毫秒",(new Date().getTime()-date1.getTime()));
+
+        return jsonArray;
+    }
+
     private String pasrserTime(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
         return sdf.format(date);

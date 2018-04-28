@@ -26,4 +26,10 @@ public class ZtfpController {
         JSONArray jsonArray = ztfpService.findAll(day);
         return  jsonArray.toJSONString();
     }
+    @RequestMapping("/ztfp/jrj")
+    public String findJrj(HttpServletRequest request) {
+        String day = request.getParameter("day");
+        JSONArray jsonArray = ztfpService.findJrj(day);
+        return  jsonArray.toJSONString();
+    }
 }
