@@ -69,8 +69,10 @@ function showCcgp(tabid) {
                                 },
                                 condition: {
                                     prefixID: 'condtion_',
+                                    align: 'left',
                                     fields: [
-                                        {name: 'stockcode', type: 'text', label: '股票代码', width: 200}
+                                        {name: 'stockcode', type: 'text', label: '股票代码', width: 150,newline:false},
+                                        {name: 'stockname', type: 'text', label: '股票名称', width: 150,newline:false}
                                     ]
                                 }, onSelected: function (e) {
                                     // console.log(e);
