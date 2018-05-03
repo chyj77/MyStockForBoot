@@ -84,7 +84,12 @@ function executeZtfpShow(day,tabid) {
                             display: '涨停概念',
                             name: 'ztgn', minWidth: 90, editor: {type: 'text'}
                         }
-                    ], data: ztfpDatas, pageSize: 100, rownumbers: true
+                    ], data: ztfpDatas, pageSize: 100, rownumbers: true, enabledEdit: true,onReload: ztfpFresh,
+                    toolbar: {
+                        items: [
+                            {text: '保存', click: doSaveFpbj, icon: 'save'}
+                        ]
+                    }
                 });
             }
         }
@@ -150,4 +155,38 @@ function showJrj() {
             }
         });
     }
+}
+function doSaveFpbj(item) {
+    $("#pageloading").show();
+    var manager = $("#maingridZtfp").ligerGetGridManager();
+    var rows = manager.rows;
+
+    var rq = $("#txt2").val();
+    var param = {"rq":rq,"data":rows};
+    console.log(param);
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/ztfp/doSaveZtfp',
+        data: JSON.stringify(param),
+        success: function (data) {
+            alert(data);
+        }
+    });
+    $("#pageloading").hide();
+}
+function ztfpFresh() {
+    // console.log("刷新");
+    var rq = $("#txt2").val();
+    $.ajax({
+        type: 'GET',
+        contentType: 'application/json',
+        url: '/ztfp/index',
+        data:{'day':rq},
+        success: function (data) {
+            var resultData = JSON.parse(data);
+            $("#maingridZtfp").loadData(resultData);
+            // console.log("刷新完成");
+        }
+    });
 }

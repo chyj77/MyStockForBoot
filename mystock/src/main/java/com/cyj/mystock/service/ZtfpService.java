@@ -1,5 +1,7 @@
 package com.cyj.mystock.service;
 
+import com.cyj.mystock.bean.ZtfpBean;
+import com.cyj.mystock.utils.MyStringUtils;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -9,14 +11,19 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Log4j2
@@ -29,12 +36,9 @@ public class ZtfpService {
      * 查询所有的Student信息
      * @return
      */
-    public JSONArray findAll(String day){
+    public net.sf.json.JSONArray findAll(String day){
         Date date1 = new Date();
-//        String jsonSql="{distinct:'thslhb',key:'rq'}";
-//        Calendar cal = Calendar.getInstance();
-//        cal.add(Calendar.DAY_OF_MONTH, -1);
-//        String day = pasrserTime(cal.getTime());
+/*
         MongoCollection<Document> collection = mongoTemplate.getCollection("fupan");
         FindIterable<Document> findIterable = collection.find(new Bson() {
             @Override
@@ -51,9 +55,22 @@ public class ZtfpService {
 //            String json = document.toJson();
             jsonArray.add(document);
         }
-        log.info("获取MONGODB复盘数据耗时={}毫秒",(new Date().getTime()-date1.getTime()));
-//        List<JSONArray> list =  mongoTemplate.findAll(JSONArray.class);
+        */
+        Query query = new Query();
+        query.addCriteria(Criteria.where("rq").is(day));
+        List<ZtfpBean> list = this.mongoTemplate.find(query, ZtfpBean.class);
+        log.info("获取MONGODB复盘数据耗时={}毫秒",(System.currentTimeMillis()-date1.getTime()));
+        net.sf.json.JSONArray jsonArray =net.sf.json.JSONArray.fromObject(list);
+
         return jsonArray;
+    }
+
+    public void saveFpbj(ZtfpBean ztfpBean)throws Exception{
+        Query query = new Query();
+        query.addCriteria(Criteria.where("rq").is(ztfpBean.getRq()));
+        Update update = new Update();
+        update.set("data",ztfpBean.getData());
+        this.mongoTemplate.upsert(query,update,ztfpBean.getClass());
     }
 
     public JSONArray findJrj(String day){
@@ -74,7 +91,7 @@ public class ZtfpService {
 //            String json = document.toJson();
             jsonArray.add(document);
         }
-        log.info("获取MONGODB金融界耗时={}毫秒",(new Date().getTime()-date1.getTime()));
+        log.info("获取MONGODB金融界耗时={}毫秒",(System.currentTimeMillis()-date1.getTime()));
 
         return jsonArray;
     }
