@@ -1,30 +1,13 @@
 package com.cyj.mystock.job;
 
-import com.cyj.mystock.bean.FollowStockBean;
-import com.cyj.mystock.config.Const;
-import com.cyj.mystock.queue.QueueSender;
-import com.cyj.mystock.service.*;
-import com.cyj.mystock.utils.MyStringUtils;
+import com.cyj.mystock.service.DfbService;
+import com.cyj.mystock.service.GetDxjlService;
+import com.cyj.mystock.service.GetStockService;
+import com.cyj.mystock.service.ZfbService;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 

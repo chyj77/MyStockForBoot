@@ -2,6 +2,7 @@ package com.cyj.mystock.web;
 
 import com.cyj.mystock.bean.ZtfpBean;
 import com.cyj.mystock.service.LhbService;
+import com.cyj.mystock.service.ZtfpRedisService;
 import com.cyj.mystock.service.ZtfpService;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
@@ -22,11 +23,14 @@ public class ZtfpController {
 
     @Autowired
     private ZtfpService ztfpService;
+    @Autowired
+    private ZtfpRedisService ztfpRedisService;
 
     @RequestMapping("/ztfp/index")
     public String findAll(HttpServletRequest request) {
         String day = request.getParameter("day");
-        net.sf.json.JSONArray jsonArray = ztfpService.findAll(day);
+//        net.sf.json.JSONArray jsonArray = ztfpService.findAll(day);
+        net.sf.json.JSONArray jsonArray = ztfpRedisService.findAll(day);
         return  jsonArray.toString();
     }
     @RequestMapping("/ztfp/jrj")
@@ -39,7 +43,8 @@ public class ZtfpController {
     public String doSaveZtfp(@RequestBody ZtfpBean bean) {
         String result = "保存成功";
         try {
-            ztfpService.saveFpbj(bean);
+//            ztfpService.saveFpbj(bean);
+            ztfpRedisService.saveFpbj(bean);
         }catch (Exception e){
             log.error("",e);
             result = "保存失败";
