@@ -1,5 +1,6 @@
 package com.cyj.mystock.web;
 
+import com.cyj.mystock.service.LhbRedisService;
 import com.cyj.mystock.service.LhbService;
 import org.json.simple.JSONArray;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ public class LhbController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LhbController.class);
 
     @Autowired
-    private LhbService lhbService;
+    private LhbRedisService lhbService;
 
     @RequestMapping("/lhb/index")
     public String findAll(HttpServletRequest request) {
