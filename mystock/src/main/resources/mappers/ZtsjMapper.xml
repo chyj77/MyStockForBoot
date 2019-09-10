@@ -121,6 +121,24 @@
         </set>
         where recid = #{recid,jdbcType=INTEGER}
     </update>
+
+    <select id="getOne" resultMap="BaseResultMap">
+        SELECT ztsj.rq AS rq,ztsj.mrztgs AS mrztgs,ztsj.fyzbgs AS fyzbgs,ztsj.10dqztgs AS 10dqztgs,
+							ztsj.ztzdgn AS ztzdgn,ztsj.ztzdgs AS ztzdgs,
+							concat(ROUND(ztsj.dbcrgkl*100,0),'%') AS dbcrgkl,
+							concat(ROUND(ztsj.spcgl*100,0),'%') AS spcgl,ztsj.recid as recid,
+							concat(ROUND(ztsj.10dqztgkl*100,0),'%') AS 10dqztgkl,ztsj.bzsl AS bzsl,
+							concat(ROUND(ztsj.bzl*100,0),'%') AS bzl
+							FROM ztsj
+							<if test="rq != null and rq !='' ">
+                                where rq = #{rq}
+                            </if>
+                            <if test="rq == null or rq =='' ">
+							order by rq DESC
+							limit 1
+                            </if>
+    </select>
+
     <!--
     <insert id="insertSelective" parameterType="com.lgp.SpringBoot.bean.AppMessage" >
         insert into appuser_message

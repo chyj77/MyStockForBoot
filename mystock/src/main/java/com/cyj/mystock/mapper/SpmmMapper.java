@@ -4,10 +4,11 @@ import com.cyj.mystock.bean.MaretStockBean;
 import com.cyj.mystock.bean.SpmmBean;
 import com.cyj.mystock.bean.ZdtBean;
 import com.cyj.mystock.bean.ZtsjBean;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-
+@Component
 public interface SpmmMapper {
 
     List<SpmmBean> getAll();

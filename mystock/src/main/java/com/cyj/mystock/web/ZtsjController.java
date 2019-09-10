@@ -57,4 +57,9 @@ public class ZtsjController {
         }
         return  providerMsg;
     }
+    @RequestMapping("/ztsj/getOne")
+    @ResponseBody
+    public ZtsjBean getOne(@RequestParam(required = false) String rq) {
+        return  service.getOne(rq);
+    }
 }

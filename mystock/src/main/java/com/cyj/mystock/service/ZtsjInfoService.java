@@ -110,4 +110,7 @@ public class ZtsjInfoService {
         jsonObject.put("Total", set.size());
         return jsonObject.toString();
     }
+    public ZtsjBean getOne(String rq){
+        return ztsjMapper.getOne(rq);
+    }
 }
