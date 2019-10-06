@@ -25,6 +25,7 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
 	<dependencies>
@@ -142,7 +143,7 @@
                     <!-- docker 创建镜像的名称 docker.registry是docker registry的IP， docker.registry.name
                     是在 docker registr 创建的repository 名称 project.artifactId 项目名称 project.version
                     版本 -->
-                    <imageName>yinteng-docker.pkg.coding.net/ceshixiangmu/stock/${project.artifactId}:${project.version}</imageName>
+                    <imageName>yinteng-docker.pkg.coding.net/ceshixiangmu/stock/${project.artifactId}-${maven.build.timestamp}:${project.version}</imageName>
                     <!-- dockerfile 的存放路径-->
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <!-- docker 远程服务的ip和端口 (注：如果本机没有安装docker环境，可以使用远程已经安装并启动了dockerd服务来打包docker镜像) -->
