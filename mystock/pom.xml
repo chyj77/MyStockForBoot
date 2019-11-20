@@ -153,7 +153,7 @@
 					<imageTags>
 						<imageTag>${project.artifactId}</imageTag>
 					</imageTags>
-                    <pushImage>true</pushImage>
+                    <pushImage>false</pushImage>
 					<rm>true</rm>
                     <!-- docker resources 指定微服务jar的路径，将微服务的jar包部署到docker容器镜像中 -->
                     <resources>
