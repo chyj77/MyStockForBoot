@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@CrossOrigin
 public class ZtsjController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZtsjController.class);
 
